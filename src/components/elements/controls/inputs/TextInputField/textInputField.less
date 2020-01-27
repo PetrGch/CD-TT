@@ -1,0 +1,30 @@
+@import "../../../../../util/variables";
+
+.lib-textLabelField {
+  display: block;
+  width: 100%;
+  padding: 4px 10px;
+  font-size: 16px;
+}
+
+.lib-textInputField {
+  display: block;
+  width: 100%;
+  height: 100px;
+  padding: 12px 10px;
+  border: 1px solid @primary-gray;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  background: @primary-white;
+
+  &:focus {
+    border: 1px solid @primary-blue;
+  }
+
+  &_isValid {
+    &--false {
+      border: 1px solid @primary-red;
+    }
+  }
+}
