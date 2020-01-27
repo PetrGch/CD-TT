@@ -1,3 +1,5 @@
+@import "../../../../util/variables";
+
 .editProductForm {
   &__input {
     margin-bottom: 10px;
@@ -9,5 +11,31 @@
 
   &__textarea {
     margin-bottom: 10px;
+  }
+}
+
+.editProductFormInput {
+  display: flex;
+  flex-direction: column;
+  &__label {
+    display: block;
+    padding: 4px 10px;
+    font-size: 16px;
+  }
+
+  &__date {
+    display: block;
+    width: 50%;
+    height: 40px;
+    padding: 12px 10px;
+    border: 1px solid @primary-gray;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    background: @primary-white;
+
+    &:focus {
+      border: 1px solid @primary-blue;
+    }
   }
 }

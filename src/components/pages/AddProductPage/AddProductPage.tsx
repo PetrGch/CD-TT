@@ -4,7 +4,7 @@ import EditProductForm from "../../elements/forms/EditProductForm/EditProductFor
 import { IEditProductFormValue } from "../../elements/forms/EditProductForm/editProductForm.interface";
 
 import "./addProductPage.less";
-import exp = require("constants");
+
 import { withRouter } from "react-router";
 
 interface IAddProductPageState extends IEditProductFormValue {}
@@ -17,7 +17,7 @@ class AddProductPage extends React.PureComponent<any, IAddProductPageState> {
         this.state = {
             nameValue: "",
             quantityValue: "",
-            dateValue: "",
+            dateValue: null,
             descriptionValue: "",
             emailValue: ""
         };
@@ -48,12 +48,16 @@ class AddProductPage extends React.PureComponent<any, IAddProductPageState> {
                         tabIndex={1}
                         className="addProductPageAction__button addProductPageAction__button_type--cancel"
                         onClick={this.cancel}
-                    >Cancel</div>
+                    >
+                        Cancel
+                    </div>
                     <div
                         tabIndex={1}
                         className="addProductPageAction__button addProductPageAction__button_type--add"
                         onClick={this.addProduct}
-                    >Add Product</div>
+                    >
+                        Add Product
+                    </div>
                 </div>
             </div>
         )

@@ -33,20 +33,24 @@ module.exports = {
                 loader: "source-map-loader"
             },
             {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'css-loader', // translates CSS into CommonJS
+                    }
+                ]
+            },
+            {
                 test: /\.less$/,
                 use: [
-                    require.resolve('style-loader'),
                     {
-                        loader: require.resolve('css-loader'),
-                        options: {
-                            importLoaders: 1,
-                        },
+                        loader: 'style-loader', // creates style nodes from JS strings
                     },
                     {
-                        loader: require.resolve('less-loader'),
-                        options: {
-                            javascriptEnabled: true
-                        },
+                        loader: 'css-loader', // translates CSS into CommonJS
+                    },
+                    {
+                        loader: 'less-loader', // compiles Less to CSS
                     },
                 ],
             },

@@ -1,23 +1,27 @@
 import * as React from "react";
+import {RouteComponentProps, withRouter, WithRouterProps} from "react-router";
 
 import EditProductForm from "../../elements/forms/EditProductForm/EditProductForm";
+import { IEditProductFormValue } from "../../elements/forms/EditProductForm/editProductForm.interface";
+import Product from "../../elements/Product/Product.model";
 
 import "./editProductPage.less";
-import { IEditProductFormValue } from "../../elements/forms/EditProductForm/editProductForm.interface";
-import { withRouter } from "react-router";
-import Product from "../../elements/Product/Product.model";
+
+interface IEditProductPageProps extends RouteComponentProps<any> {
+    addNewProduct: (product: Product) => void
+}
 
 interface IEditProductPageState extends IEditProductFormValue {}
 
-class EditProductPage extends React.PureComponent<any, IEditProductPageState> {
+class EditProductPage extends React.PureComponent<IEditProductPageProps, IEditProductPageState> {
 
-    constructor(props: any) {
+    constructor(props: IEditProductPageProps) {
         super(props);
 
         this.state = {
             nameValue: "",
-            quantityValue: "",
-            dateValue: "",
+            quantityValue: null,
+            dateValue: null,
             descriptionValue: "",
             emailValue: ""
         };
@@ -48,12 +52,16 @@ class EditProductPage extends React.PureComponent<any, IEditProductPageState> {
                         tabIndex={1}
                         className="editProductPageAction__button editProductPageAction__button_type--cancel"
                         onClick={this.cancel}
-                    >Cancel</div>
+                    >
+                        Cancel
+                    </div>
                     <div
                         tabIndex={1}
                         className="editProductPageAction__button editProductPageAction__button_type--add"
                         onClick={this.addProduct}
-                    >Edit Product</div>
+                    >
+                        Edit Product
+                    </div>
                 </div>
             </div>
         )
@@ -68,15 +76,17 @@ class EditProductPage extends React.PureComponent<any, IEditProductPageState> {
 
     private addProduct() {
         const { nameValue, quantityValue, dateValue, descriptionValue, emailValue } = this.state;
-        console.log(this.state);
+        const { addNewProduct } = this.props;
         const newProduct = new Product(nameValue, quantityValue, dateValue, descriptionValue, emailValue);
+
+        addNewProduct(newProduct);
     }
 
     private cancel() {
         const { history } = this.props;
         console.log(this.props)
 
-        // history.push("/");
+        history.push("/");
     }
 
 }

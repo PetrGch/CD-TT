@@ -17,10 +17,25 @@ export default class App extends React.PureComponent<{}, {}> {
                 <Header/>
                 <main className="app_main">
                     <Switch>
-                        <Route exact path="/editProduct" component={EditProductPageContainer}/>
-                        <Route exact path="/addProduct" component={AddProductPage}/>
-                        <Route exact path="/" component={ProductPage}/>
-                        <Route path="/" component={NotFoundPage}/>
+                        <Route
+                            exact={true}
+                            path="/editProduct"
+                            component={EditProductPageContainer}
+                        />
+                        <Route
+                            exact={true}
+                            path="/addProduct"
+                            component={AddProductPage}
+                        />
+                        <Route
+                            exact={true}
+                            path="/"
+                            component={ProductPage}
+                        />
+                        <Route
+                            path="/"
+                            component={NotFoundPage}
+                        />
                     </Switch>
                 </main>
                 <Footer/>

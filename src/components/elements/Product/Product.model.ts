@@ -4,13 +4,19 @@ export default class Product {
 
     private _id: string;
     private _name: string;
-    private _quantity: number;
-    private _date: Date;
+    private _quantity: number | null;
+    private _date: Date | null;
     private _description: string;
     private _email: string;
 
 
-    constructor(name: string, quantity: number, date: Date, description: string, email: string) {
+    constructor(
+        name: string,
+        quantity: number | null,
+        date: Date | null,
+        description: string,
+        email: string
+    ) {
         this._id = v4();
         this._name = name;
         this._quantity = quantity;
@@ -18,7 +24,6 @@ export default class Product {
         this._description = description;
         this._email = email;
     }
-
 
     get name(): string {
         return this._name;
@@ -28,19 +33,19 @@ export default class Product {
         this._name = value;
     }
 
-    get quantity(): number {
+    get quantity(): number | null {
         return this._quantity;
     }
 
-    set quantity(value: number) {
+    set quantity(value: number | null) {
         this._quantity = value;
     }
 
-    get date(): Date {
+    get date(): Date | null {
         return this._date;
     }
 
-    set date(value: Date) {
+    set date(value: Date | null) {
         this._date = value;
     }
 

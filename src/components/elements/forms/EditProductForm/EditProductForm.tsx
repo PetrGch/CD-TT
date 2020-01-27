@@ -1,4 +1,5 @@
 import * as React from "react";
+import DatePicker from "react-datepicker";
 
 import DefaultInputField from "../../controls/inputs/DefaultInputField/DefaultInputField";
 import TextInputField from "../../controls/inputs/TextInputField/TextInputField";
@@ -7,7 +8,7 @@ import "./editProductForm.less";
 import { IEditProductFormValue } from "./editProductForm.interface";
 
 interface IEditProductFormProps extends IEditProductFormValue {
-    updateFormValue: (name: string, value: string | number) => void;
+    updateFormValue: (name: string, value: string | number | Date) => void;
 }
 
 interface IEditProductFormState extends IEditProductFormValue {}
@@ -47,12 +48,13 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
                     />
                 </div>
 
-                <div className="editProductForm__input">
-                    <DefaultInputField
-                        label="Date"
-                        value={dateValue}
-                        placeholder="Date"
+                <div className="editProductForm__input editProductFormInput">
+                    <span className="editProductFormInput__label">Date</span>
+                    <DatePicker
+                        className="editProductFormInput__date"
+                        selected={dateValue}
                         onChange={this.onDateChange}
+                        placeholderText="Date"
                     />
                 </div>
 
@@ -89,10 +91,10 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
         updateFormValue("quantityValue", event.currentTarget.value);
     }
 
-    private onDateChange(event: React.FormEvent<HTMLInputElement>) {
+    private onDateChange(date: Date) {
         const { updateFormValue } = this.props;
 
-        updateFormValue("dateValue", event.currentTarget.value);
+        updateFormValue("dateValue", date);
     }
 
     private onDescriptionChange(event: React.FormEvent<HTMLTextAreaElement>) {

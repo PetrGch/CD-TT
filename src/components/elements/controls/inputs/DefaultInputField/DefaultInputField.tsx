@@ -4,7 +4,7 @@ import v4 = require("uuid/v4");
 import "./defaultInputField.less";
 
 interface IInputFieldProps {
-    value?: string | number;
+    value?: string | number | null;
     type?: string;
     label?: string;
     placeholder?: string;
@@ -59,7 +59,7 @@ export default class DefaultInputField extends React.PureComponent<IInputFieldPr
                 <input
                     id={this.inputId}
                     type={type}
-                    value={value || stateValue}
+                    value={value || stateValue || ""}
                     placeholder={placeholder}
                     disabled={disabled}
                     className={inputClassName}
