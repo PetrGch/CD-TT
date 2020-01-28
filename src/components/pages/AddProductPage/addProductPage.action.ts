@@ -2,9 +2,9 @@ import Product from "../../elements/Product/Product.model";
 import {AnyAction} from "redux";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import { API_URL } from "../../../base.constants";
-import { UPDATE_PRODUCT } from "./editProductPage.constant";
+import { ADD_PRODUCT } from "./addProductPage.constant";
 
-export function updateProduct(product: Product): ThunkAction<{}, {}, {}, AnyAction> {
+export function addNewProduct(product: Product): ThunkAction<{}, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<any> => {
         const url = API_URL;
         const body = product.serialize();
@@ -19,7 +19,7 @@ export function updateProduct(product: Product): ThunkAction<{}, {}, {}, AnyActi
             .then((response: any) => response.json())
             .then((data: any) => {
                 if (!data.error) {
-                    dispatch({ type: UPDATE_PRODUCT, payload: data });
+                    dispatch({ type: ADD_PRODUCT, payload: data });
                 }
             })
             .catch((ex: any) => {

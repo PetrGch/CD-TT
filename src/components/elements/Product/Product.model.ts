@@ -65,4 +65,16 @@ export default class Product {
         this._email = value;
     }
 
+    public serialize() {
+        const preparedObject = {
+            name: this.name,
+            quantity: this.quantity,
+            date: this.date,
+            description: this.description,
+            email: this.email
+        };
+
+        return JSON.stringify(preparedObject)
+    }
+
 }

@@ -1,51 +1,31 @@
 import * as React from "react";
-import {RouteComponentProps, withRouter, WithRouterProps} from "react-router";
+import {RouteComponentProps, withRouter} from "react-router";
 
-import EditProductForm from "../../elements/forms/EditProductForm/EditProductForm";
-import { IEditProductFormValue } from "../../elements/forms/EditProductForm/editProductForm.interface";
+import EditProductForm from "../../elements/forms/EditProductForm/editProductForm.container";
 import Product from "../../elements/Product/Product.model";
 
 import "./editProductPage.less";
+import { IEditProductFormValue } from "../../elements/forms/EditProductForm/editProductForm.interface";
 
-interface IEditProductPageProps extends RouteComponentProps<any> {
-    addNewProduct: (product: Product) => void
+interface IEditProductPageProps extends RouteComponentProps<any>, IEditProductFormValue {
+    updateProduct: (product: Product) => void
 }
 
-interface IEditProductPageState extends IEditProductFormValue {}
-
-class EditProductPage extends React.PureComponent<IEditProductPageProps, IEditProductPageState> {
+class EditProductPage extends React.PureComponent<IEditProductPageProps, {}> {
 
     constructor(props: IEditProductPageProps) {
         super(props);
 
-        this.state = {
-            nameValue: "",
-            quantityValue: null,
-            dateValue: null,
-            descriptionValue: "",
-            emailValue: ""
-        };
-
-        this.updateFormValue = this.updateFormValue.bind(this);
-        this.addProduct = this.addProduct.bind(this);
+        this.updateProduct = this.updateProduct.bind(this);
         this.cancel = this.cancel.bind(this);
     }
 
     public render(): React.ReactNode {
-        const { nameValue, quantityValue, dateValue, descriptionValue, emailValue } = this.state;
-
         return (
             <div className="editProductPage">
                 <h1 className="editProductPage__title">Edit Product</h1>
 
-                <EditProductForm
-                    nameValue={nameValue}
-                    quantityValue={quantityValue}
-                    dateValue={dateValue}
-                    descriptionValue={descriptionValue}
-                    emailValue={emailValue}
-                    updateFormValue={this.updateFormValue}
-                />
+                <EditProductForm/>
 
                 <div className="editProductPage__action editProductPageAction">
                     <div
@@ -58,7 +38,7 @@ class EditProductPage extends React.PureComponent<IEditProductPageProps, IEditPr
                     <div
                         tabIndex={1}
                         className="editProductPageAction__button editProductPageAction__button_type--add"
-                        onClick={this.addProduct}
+                        onClick={this.updateProduct}
                     >
                         Edit Product
                     </div>
@@ -67,24 +47,15 @@ class EditProductPage extends React.PureComponent<IEditProductPageProps, IEditPr
         )
     }
 
-    private updateFormValue(name: string, value: string | number) {
-        const valueForUpdate: {[key: string]: string | number} = {};
-        valueForUpdate[name] = value;
+    private updateProduct() {
+        const { updateProduct, name, quantity, date, description, email } = this.props;
+        const newProduct = new Product(name.value, quantity.value, date.value, description.value, email.value)
 
-        this.setState((prevState: any) => ({ ...prevState, ...valueForUpdate }));
-    }
-
-    private addProduct() {
-        const { nameValue, quantityValue, dateValue, descriptionValue, emailValue } = this.state;
-        const { addNewProduct } = this.props;
-        const newProduct = new Product(nameValue, quantityValue, dateValue, descriptionValue, emailValue);
-
-        addNewProduct(newProduct);
+        updateProduct(newProduct);
     }
 
     private cancel() {
         const { history } = this.props;
-        console.log(this.props)
 
         history.push("/");
     }

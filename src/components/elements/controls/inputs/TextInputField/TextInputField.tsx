@@ -16,7 +16,7 @@ interface ITextInputFieldProps {
     rows?: number;
     cols?: number;
 
-    onChange?: (event: React.FormEvent<HTMLTextAreaElement>) => void;
+    onChange?: (value: any) => void;
 }
 
 interface ITextInputFieldState {
@@ -82,7 +82,7 @@ export default class TextInputField extends React.PureComponent<ITextInputFieldP
         const { onChange } = this.props;
 
         if (typeof onChange === "function") {
-            onChange(event);
+            onChange(event.currentTarget.value);
         } else {
             this.setState({ stateValue: event.currentTarget.value})
         }

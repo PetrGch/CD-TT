@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
-import EditProductPage from "./EditProductPage";
-import { updateProduct } from "./editProductPage.action";
 import Product from "../../elements/Product/Product.model";
+import { addNewProduct } from "./addProductPage.action";
+import AddProductPage from "./AddProductPage";
 
 const mapStateToProps = (state: any) => {
     return {
@@ -16,14 +16,14 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
     dispatch,
-    updateProduct: (product: Product) => {
-        dispatch(updateProduct(product))
+    addNewProduct: (product: Product) => {
+        dispatch(addNewProduct(product))
     }
 });
 
-const EditProductPageContainer = connect(
+const AddProductPageContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(EditProductPage);
+)(AddProductPage);
 
-export default EditProductPageContainer;
+export default AddProductPageContainer;

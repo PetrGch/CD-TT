@@ -5,10 +5,15 @@ import DefaultInputField from "../../controls/inputs/DefaultInputField/DefaultIn
 import TextInputField from "../../controls/inputs/TextInputField/TextInputField";
 
 import "./editProductForm.less";
-import { IEditProductFormValue } from "./editProductForm.interface";
+import { IEditProductFormValue, UpdateFormValue, UpdateFormValueParameters } from "./editProductForm.interface";
 
 interface IEditProductFormProps extends IEditProductFormValue {
-    updateFormValue: (name: string, value: string | number | Date) => void;
+    setProductName: (value: string) => void;
+    setProductQuantity: (value: number | null) => void;
+    setProductDate: (value: Date) => void;
+    setProductDescription: (value: string) => void;
+    setProductEmail: (value: string) => void;
+    isNameUnique: (value: string) => void;
 }
 
 interface IEditProductFormState extends IEditProductFormValue {}
@@ -19,6 +24,7 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
         super(props);
 
         this.onProductNameChange = this.onProductNameChange.bind(this);
+        this.onProductNameBlur = this.onProductNameBlur.bind(this);
         this.onQuantityChange = this.onQuantityChange.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
@@ -26,23 +32,26 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
     }
 
     public render(): React.ReactNode {
-        const { nameValue, quantityValue, dateValue, descriptionValue, emailValue } = this.props;
+        const { name, quantity, date, description, email } = this.props;
 
         return (
             <div className="editProductForm">
                 <div className="editProductForm__input">
                     <DefaultInputField
                         label="Product name*"
-                        value={nameValue}
+                        value={name.value}
+                        isValid={name.isValid}
                         placeholder="Product name"
                         onChange={this.onProductNameChange}
+                        onBlur={this.onProductNameBlur}
                     />
                 </div>
 
                 <div className="editProductForm__input">
                     <DefaultInputField
                         label="Quantity"
-                        value={quantityValue}
+                        value={quantity.value}
+                        isValid={quantity.isValid}
                         placeholder="Quantity"
                         onChange={this.onQuantityChange}
                     />
@@ -52,7 +61,7 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
                     <span className="editProductFormInput__label">Date</span>
                     <DatePicker
                         className="editProductFormInput__date"
-                        selected={dateValue}
+                        selected={date.value}
                         onChange={this.onDateChange}
                         placeholderText="Date"
                     />
@@ -61,7 +70,8 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
                 <div className="editProductForm__textarea">
                     <TextInputField
                         label="Description"
-                        value={descriptionValue}
+                        value={description.value}
+                        isValid={description.isValid}
                         placeholder="Description"
                         onChange={this.onDescriptionChange}
                     />
@@ -70,7 +80,8 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
                 <div className="editProductForm__input">
                     <DefaultInputField
                         label="Email*"
-                        value={emailValue}
+                        value={email.value}
+                        isValid={email.isValid}
                         placeholder="Email"
                         onChange={this.onEmailChange}
                     />
@@ -79,33 +90,39 @@ export default class EditProductForm extends React.PureComponent<IEditProductFor
         )
     }
 
-    private onProductNameChange(event: React.FormEvent<HTMLInputElement>) {
-        const { updateFormValue } = this.props;
+    private onProductNameBlur(value: string) {
+        const { isNameUnique } = this.props;
 
-        updateFormValue("nameValue", event.currentTarget.value);
+        isNameUnique(value);
     }
 
-    private onQuantityChange(event: React.FormEvent<HTMLInputElement>) {
-        const { updateFormValue } = this.props;
+    private onProductNameChange(value: string) {
+        const { setProductName } = this.props;
 
-        updateFormValue("quantityValue", event.currentTarget.value);
+        setProductName(value);
     }
 
-    private onDateChange(date: Date) {
-        const { updateFormValue } = this.props;
+    private onQuantityChange(value: number | null) {
+        const { setProductQuantity } = this.props;
 
-        updateFormValue("dateValue", date);
+        setProductQuantity(value);
     }
 
-    private onDescriptionChange(event: React.FormEvent<HTMLTextAreaElement>) {
-        const { updateFormValue } = this.props;
+    private onDateChange(value: Date) {
+        const { setProductDate } = this.props;
 
-        updateFormValue("descriptionValue", event.currentTarget.value);
+        setProductDate(value);
     }
 
-    private onEmailChange(event: React.FormEvent<HTMLInputElement>) {
-        const { updateFormValue } = this.props;
+    private onDescriptionChange(value: string) {
+        const { setProductDescription } = this.props;
 
-        updateFormValue("emailValue", event.currentTarget.value);
+        setProductDescription(value);
+    }
+
+    private onEmailChange(value: string) {
+        const { setProductEmail } = this.props;
+
+        setProductEmail(value);
     }
 }

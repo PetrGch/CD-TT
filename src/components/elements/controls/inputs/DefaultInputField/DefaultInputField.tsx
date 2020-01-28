@@ -2,6 +2,7 @@ import * as React from "react";
 import v4 = require("uuid/v4");
 
 import "./defaultInputField.less";
+import { dictionaryOfValidationRules, ValidationRuleNames } from "../../../../../util/formValidations";
 
 interface IInputFieldProps {
     value?: string | number | null;
@@ -13,11 +14,12 @@ interface IInputFieldProps {
     inputClassName?: string;
     labelClassName?: string;
 
-    onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
+    onChange?: (value: any) => void;
+    onBlur?: (value: any) => void;
 }
 
 interface IInputFieldState {
-    stateValue?: string | number;
+    stateValue: string | number;
 }
 
 export default class DefaultInputField extends React.PureComponent<IInputFieldProps, IInputFieldState> {
@@ -40,6 +42,7 @@ export default class DefaultInputField extends React.PureComponent<IInputFieldPr
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputBlur = this.handleInputBlur.bind(this);
     }
 
     public render(): React.ReactNode {
@@ -66,6 +69,7 @@ export default class DefaultInputField extends React.PureComponent<IInputFieldPr
                     tabIndex={1}
 
                     onChange={this.handleInputChange}
+                    onBlur={this.handleInputBlur}
                 />
             </>
         );
@@ -73,11 +77,21 @@ export default class DefaultInputField extends React.PureComponent<IInputFieldPr
 
     private handleInputChange(event: React.FormEvent<HTMLInputElement>) {
         const { onChange } = this.props;
+        const { value } = event.currentTarget;
 
         if (typeof onChange === "function") {
-            onChange(event);
+            onChange(value);
         } else {
-            this.setState({ stateValue: event.currentTarget.value})
+            this.setState({ stateValue: event.currentTarget.value })
+        }
+    }
+
+    private handleInputBlur(event: React.FormEvent<HTMLInputElement>) {
+        const { onBlur } = this.props;
+        const { value } = event.currentTarget;
+
+        if (typeof onBlur === "function") {
+            onBlur(value);
         }
     }
 

@@ -1,13 +1,14 @@
-import { ADD_PRODUCT } from "../components/pages/EditProductPage/editProductPage.constant";
+import Product from "../components/elements/Product/Product.model";
+import { ADD_PRODUCT } from "../components/pages/AddProductPage/addProductPage.constant";
 
-const initialState = {
-    products: []
-};
-
-type actionType = {
+export type actionType = {
     payload: any;
     type: string;
 }
+
+const initialState: { products: Product[] } = {
+    products: []
+};
 
 export const products = (state = initialState, action: actionType) => {
     switch (action.type) {
